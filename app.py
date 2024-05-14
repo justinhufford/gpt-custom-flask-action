@@ -1,6 +1,7 @@
 # app.py - this is the main Heroku app that runs all of the Actions
 from flask import Flask, make_response, request
 from flask_cors import CORS
+from flask_migrate import Migrate, upgrade
 import requests
 import re
 import os
@@ -9,6 +10,19 @@ from flask_migrate import Migrate
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
+
+# Initialize Flask-Migrate
+migrate = Migrate(app, db)
+
+@app.cli.command("init-db")
+def init_db():
+    """Initialize the database."""
+    upgrade()
+
+# Health check
+@app.route("/")
+def health_check():
+    return make_response("Healthy.", 200)
 
 # Database configuration
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///golfcommand.db')
