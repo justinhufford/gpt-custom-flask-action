@@ -1,3 +1,15 @@
+r"""
+Welcome!
+To start the app,
+1. Open CMD in the directory
+2. Activate the Virtual Environemnt     .\venv\Scripts\activate
+3. Launch the app                       python app.py
+4. Verify app is running in browser     http://localhost:5000/
+
+Special thanks to Katie Pelton
+https://medium.com/@katie_10147/quickly-connect-your-api-to-a-custom-gpt-using-flask-and-heroku-6e726f6a4cb0
+"""
+
 from flask import Flask, make_response, request
 from flask_cors import CORS
 import requests
