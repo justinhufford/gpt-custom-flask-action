@@ -1,19 +1,19 @@
-#app.py - this is the main Heroku app that runs all of the Actions
+# app.py - updated to only include object generation
+
 from flask import Flask, make_response, request
 from flask_cors import CORS
 import random
-import os 
+import json  # Added to use json.dumps for responses
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
-
 
 # Health check
 @app.route("/")
 def health_check():
     return make_response("Healthy.", 200)
 
-
+# New route to generate an object
 @app.route("/generate-object", methods=["POST"])
 def generate_object():
     data = request.json
@@ -33,7 +33,7 @@ def generate_object():
         "decay": decay
     }
 
-    return jsonify(object_data)
+    return make_response(json.dumps(object_data), 200)
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
