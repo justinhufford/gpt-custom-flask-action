@@ -11,14 +11,6 @@ from flask_migrate import Migrate
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
 
-# Initialize Flask-Migrate
-migrate = Migrate(app, db)
-
-@app.cli.command("init-db")
-def init_db():
-    """Initialize the database."""
-    upgrade()
-
 # Health check
 @app.route("/")
 def health_check():
@@ -50,6 +42,15 @@ class Item(db.Model):
     condition = db.Column(db.Float, nullable=False)
     decay = db.Column(db.Float, nullable=False)
     player_id = db.Column(db.Integer, db.ForeignKey('player.id'), nullable=False)
+
+
+# Initialize Flask-Migrate
+migrate = Migrate(app, db)
+
+@app.cli.command("init-db")
+def init_db():
+    """Initialize the database."""
+    upgrade()
 
 # Health check
 @app.route("/")
