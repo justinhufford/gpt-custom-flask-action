@@ -17,7 +17,7 @@ def health_check():
     return make_response("Healthy.", 200)
 
 # Database configuration
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///golfcommand.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('HEROKU_POSTGRESQL_RED_URL', 'sqlite:///golfcommand.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
